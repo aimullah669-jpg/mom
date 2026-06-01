@@ -1,0 +1,1208 @@
+
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jemputan Kahwin: Firdaus & Aisyah</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* SWAT THEME CSS (Black, Dark Slate, Turquoise/Cyan Accent, White Text) */
+        :root {
+            --bg-dark: #0a0f12;         /* Deep SWAT Tactical Black */
+            --bg-card: #121b20;         /* Dark Slate Card */
+            --primary: #00f0ff;         /* Neon Tactical Turquoise */
+            --primary-hover: #00b3bf;   /* Deeper Turquoise */
+            --text-light: #f3f4f6;      /* Off-white */
+            --text-muted: #9ca3af;      /* Muted Gray */
+            --gold: #d4af37;            /* Minimal Elegant touch */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Ambient Background Grid Pattern */
+        .ambient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(0, 240, 255, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 240, 255, 0.03) 0%, transparent 40%);
+            z-index: -2;
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(rgba(0, 240, 255, 0.02) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(0, 240, 255, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+            opacity: 0.7;
+        }
+
+        /* Audio Controls */
+        .audio-control {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: rgba(18, 27, 32, 0.85);
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .audio-control:hover {
+            transform: scale(1.1);
+            background: var(--primary);
+            color: var(--bg-dark);
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.6);
+        }
+
+        /* Overlay/Envelope Cover */
+        #envelope {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #162229 0%, #06090a 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: transform 1s cubic-bezier(0.85, 0, 0.15, 1);
+            border: 2px solid rgba(0, 240, 255, 0.1);
+        }
+
+        #envelope.opened {
+            transform: translateY(-100%);
+        }
+
+        .envelope-content {
+            text-align: center;
+            padding: 20px;
+            max-width: 500px;
+        }
+
+        .tactical-badge {
+            border: 1px solid var(--primary);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--primary);
+            display: inline-block;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.15);
+            animation: pulse-border 2s infinite;
+        }
+
+        .envelope-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--text-light);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+        }
+
+        .envelope-names {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 2.8rem;
+            color: var(--primary);
+            margin: 20px 0;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+        }
+
+        .btn-open {
+            font-family: 'Montserrat', sans-serif;
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 12px 35px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
+            margin-top: 30px;
+        }
+
+        .btn-open:hover {
+            background: var(--primary);
+            color: var(--bg-dark);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
+            transform: scale(1.05);
+        }
+
+        /* Main Container */
+        .wrapper {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header / Hero Section */
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .arabic-phrase {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: var(--primary);
+            letter-spacing: 1px;
+            text-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
+        }
+
+        .english-salut {
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid rgba(0, 240, 255, 0.15);
+            border-radius: 12px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Corner tactical markings (SWAT Theme style) */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 15px;
+            height: 15px;
+            border-top: 3px solid var(--primary);
+            border-left: 3px solid var(--primary);
+        }
+        .card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 15px;
+            height: 15px;
+            border-bottom: 3px solid var(--primary);
+            border-right: 3px solid var(--primary);
+        }
+
+        .card-corner-tr {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 15px;
+            height: 15px;
+            border-top: 3px solid var(--primary);
+            border-right: 3px solid var(--primary);
+        }
+
+        .card-corner-bl {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 15px;
+            height: 15px;
+            border-bottom: 3px solid var(--primary);
+            border-left: 3px solid var(--primary);
+        }
+
+        .parents-section p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .parent-names {
+            font-family: 'Cinzel', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-light);
+            margin: 15px 0;
+            letter-spacing: 1px;
+        }
+
+        .invitation-text {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin: 30px 0;
+        }
+
+        .bride-groom {
+            margin: 40px 0;
+        }
+
+        .name-wrapper {
+            padding: 15px;
+        }
+
+        .couple-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+        }
+
+        .ampersand {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-style: italic;
+            color: var(--text-muted);
+            margin: 10px 0;
+        }
+
+        /* Event Details */
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        @media(min-width: 600px) {
+            .details-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .detail-box {
+            background: rgba(10, 15, 18, 0.6);
+            border: 1px dashed rgba(0, 240, 255, 0.25);
+            padding: 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .detail-box:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .detail-box i {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .detail-box h3 {
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .detail-box p {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .detail-box span {
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            display: block;
+            margin-top: 5px;
+        }
+
+        /* Countdown Timer */
+        .countdown-title {
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .countdown-item {
+            background: #0d161c;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 8px;
+            padding: 10px;
+            min-width: 75px;
+            box-shadow: inset 0 0 10px rgba(0, 240, 255, 0.05);
+        }
+
+        .countdown-number {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: block;
+        }
+
+        .countdown-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+
+        /* Itinerary / Atur Cara Majlis */
+        .timeline {
+            position: relative;
+            max-width: 100%;
+            margin: 30px auto 0 auto;
+            text-align: left;
+            padding-left: 20px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 5px;
+            width: 2px;
+            height: 100%;
+            background: rgba(0, 240, 255, 0.2);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 25px;
+            padding-left: 20px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: -19px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--primary);
+            box-shadow: 0 0 8px var(--primary);
+        }
+
+        .timeline-time {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 1px;
+        }
+
+        .timeline-desc {
+            font-size: 0.95rem;
+            color: var(--text-light);
+        }
+
+        /* Map Section and Navigation Buttons */
+        .map-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn-nav {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: rgba(18, 27, 32, 0.9);
+            border: 1px solid var(--primary);
+            color: var(--text-light);
+            padding: 12px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-nav:hover {
+            background: var(--primary);
+            color: var(--bg-dark);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-nav i {
+            font-size: 1.1rem;
+        }
+
+        /* Pantun Section */
+        .pantun-section {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-muted);
+            position: relative;
+        }
+
+        .pantun-section i {
+            font-size: 1.5rem;
+            color: rgba(0, 240, 255, 0.15);
+            position: absolute;
+            top: -20px;
+            left: 10px;
+        }
+
+        /* RSVP Form Section */
+        .rsvp-form-container {
+            text-align: left;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            background: #0a0f12;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            color: var(--text-light);
+            padding: 12px 15px;
+            border-radius: 6px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.25);
+        }
+
+        .btn-submit {
+            background: var(--primary);
+            color: var(--bg-dark);
+            border: none;
+            width: 100%;
+            padding: 14px;
+            border-radius: 6px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 240, 255, 0.3);
+        }
+
+        .btn-submit:hover {
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.6);
+            transform: scale(1.02);
+        }
+
+        .rsvp-contacts {
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(0, 240, 255, 0.1);
+        }
+
+        .contact-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(10, 15, 18, 0.5);
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .contact-info {
+            text-align: left;
+        }
+
+        .contact-name {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-light);
+        }
+
+        .contact-num {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .btn-call {
+            background: transparent;
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            color: var(--primary);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-call:hover {
+            background: var(--primary);
+            color: var(--bg-dark);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+        }
+
+        /* Guestbook Section */
+        .guestbook-list {
+            margin-top: 25px;
+            max-height: 250px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        /* Scrollbar Styling */
+        .guestbook-list::-webkit-scrollbar {
+            width: 5px;
+        }
+        .guestbook-list::-webkit-scrollbar-track {
+            background: #0a0f12;
+        }
+        .guestbook-list::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        .guest-wish {
+            background: rgba(10, 15, 18, 0.7);
+            border-left: 2px solid var(--primary);
+            padding: 12px;
+            border-radius: 0 6px 6px 0;
+            margin-bottom: 12px;
+            text-align: left;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .guest-name {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .guest-text {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-top: 5px;
+        }
+
+        .guest-time {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid rgba(0, 240, 255, 0.1);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        .footer-quote {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+
+        /* Alert/Notification Modal */
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background: var(--bg-card);
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            padding: 30px;
+            z-index: 2000;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1999;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-btn {
+            background: var(--primary);
+            color: var(--bg-dark);
+            border: none;
+            padding: 10px 25px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn:hover {
+            box-shadow: 0 0 15px var(--primary);
+            transform: scale(1.05);
+        }
+
+        /* Animations */
+        @keyframes pulse-border {
+            0% { box-shadow: 0 0 10px rgba(0, 240, 255, 0.15); }
+            50% { box-shadow: 0 0 20px rgba(0, 240, 255, 0.4); }
+            100% { box-shadow: 0 0 10px rgba(0, 240, 255, 0.15); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hide Audio Element */
+        audio {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Ambient Grid & Glows -->
+    <div class="ambient-bg"></div>
+    <div class="grid-overlay"></div>
+
+    <!-- Background Audio (Premium Instrumental Piano) -->
+    <audio id="bg-music" loop>
+        <!-- Royalty free elegant background music -->
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        Pemain audio tidak disokong oleh pelayar anda.
+    </audio>
+
+    <!-- Interactive Envelope/Cover -->
+    <div id="envelope">
+        <div class="envelope-content">
+            <span class="tactical-badge"><i class="fa-solid fa-crosshairs"></i> JEMPUTAN KAHWIN INTERAKTIF</span>
+            <h1 class="envelope-title">WALIMATULURUS</h1>
+            <div class="envelope-names">Firdaus & Aisyah</div>
+            <p style="color: var(--text-muted); font-size: 0.9rem; letter-spacing: 1px;">Ahad, 15 Jun 2026</p>
+            <p style="color: var(--primary); font-size: 0.8rem; margin-top: 10px; text-transform: uppercase;">Dewan Seri Impian, Kajang</p>
+            <button class="btn-open" onclick="openEnvelope()">
+                <i class="fa-solid fa-envelope-open" style="margin-right: 8px;"></i> Buka Jemputan
+            </button>
+        </div>
+    </div>
+
+    <!-- Audio Control Button Floating -->
+    <div class="audio-control" id="audioToggle" onclick="toggleAudio()">
+        <i class="fa-solid fa-volume-xmark" id="audioIcon"></i>
+    </div>
+
+    <!-- Content Wrapper -->
+    <div class="wrapper">
+        
+        <!-- Header -->
+        <header>
+            <div class="arabic-phrase">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+            <div class="english-salut">ASSALAMUALAIKUM WARAHMATULLAHI WABARAKATUH</div>
+        </header>
+
+        <!-- Parents Section -->
+        <div class="card">
+            <div class="card-corner-tr"></div>
+            <div class="card-corner-bl"></div>
+            
+            <div class="parents-section">
+                <p>Dengan penuh rasa syukur ke hadrat Allah Subhanahu Wa Ta’ala serta memohon limpah kurnia dan rahmat-Nya yang berpanjangan, maka dengan segala hormat dan takzimnya,</p>
+                
+                <h2 class="parent-names">Yang Berbahagia Tuan Haji Ahmad bin Abdullah</h2>
+                <p style="font-weight: 600; font-size: 0.9rem; color: var(--primary); margin: 5px 0;">&</p>
+                <h2 class="parent-names">Yang Berbahagia Puan Hajah Siti Zaleha binti Ismail</h2>
+                
+                <p style="margin-top: 15px;">seisi keluarga,</p>
+                <p class="invitation-text">menjemput dengan penuh sukacita dan berbesar hati akan kehadiran Dato’ / Datin / Tuan / Puan / Encik / Cik ke</p>
+                
+                <p style="text-transform: uppercase; font-size: 0.85rem; letter-spacing: 2px; color: var(--primary); font-weight: 700; margin-top: 20px;">
+                    <i class="fa-solid fa-star-of-life"></i> MAJLIS PERSANDINGAN PUTERA DAN PUTERI KAMI
+                </p>
+            </div>
+
+            <!-- Couple Section -->
+            <div class="bride-groom">
+                <div class="name-wrapper">
+                    <h2 class="couple-name">Muhammad Firdaus bin Ahmad</h2>
+                </div>
+                <div class="ampersand">dengan</div>
+                <div class="name-wrapper">
+                    <h2 class="couple-name">Nur Aisyah binti Mohd Razali</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Countdown Timer Card -->
+        <div class="card">
+            <div class="card-corner-tr"></div>
+            <div class="card-corner-bl"></div>
+            <div class="countdown-title"><i class="fa-solid fa-clock"></i> KIRA DETIK MAJLIS</div>
+            <div class="countdown-container" id="countdown">
+                <div class="countdown-item">
+                    <span class="countdown-number" id="days">00</span>
+                    <span class="countdown-label">Hari</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="hours">00</span>
+                    <span class="countdown-label">Jam</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="minutes">00</span>
+                    <span class="countdown-label">Minit</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="seconds">00</span>
+                    <span class="countdown-label">Saat</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Event Details Card -->
+        <div class="card">
+            <div class="card-corner-tr"></div>
+            <div class="card-corner-bl"></div>
+            
+            <h2 style="font-family: 'Cinzel', serif; font-size: 1.4rem; color: var(--primary); margin-bottom: 25px; letter-spacing: 2px;">
+                <i class="fa-solid fa-calendar-days"></i> BUTIRAN MAJLIS
+            </h2>
+
+            <div class="details-grid">
+                <div class="detail-box">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    <h3>Tarikh</h3>
+                    <p>Ahad, 15 Jun 2026</p>
+                    <span>29 Zulhijjah 1447H</span>
+                </div>
+                <div class="detail-box">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <h3>Masa</h3>
+                    <p>11.00 Pagi - 5.00 Petang</p>
+                </div>
+            </div>
+
+            <div class="detail-box" style="margin-top: 25px; width: 100%;">
+                <i class="fa-solid fa-location-dot"></i>
+                <h3>Tempat</h3>
+                <p style="font-size: 1.1rem; color: var(--primary); margin-bottom: 10px;">Dewan Seri Impian</p>
+                <p style="font-size: 0.9rem; font-weight: 400; color: var(--text-muted); line-height: 1.5;">
+                    No. 88, Jalan Melur Indah,<br>
+                    Taman Sri Damai,<br>
+                    43000 Kajang, Selangor Darul Ehsan.
+                </p>
+                
+                <!-- Navigasi Pintas -->
+                <div class="map-section">
+                    <a href="https://maps.google.com/?q=Dewan+Seri+Impian+Kajang" target="_blank" class="btn-nav">
+                        <i class="fa-solid fa-map-location-dot"></i> Petunjuk Google Maps
+                    </a>
+                    <a href="https://waze.com/ul?q=Dewan+Seri+Impian+Kajang" target="_blank" class="btn-nav">
+                        <i class="fa-brands fa-waze"></i> Petunjuk Waze
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Atur Cara Majlis Card -->
+        <div class="card">
+            <div class="card-corner-tr"></div>
+            <div class="card-corner-bl"></div>
+            
+            <h2 style="font-family: 'Cinzel', serif; font-size: 1.4rem; color: var(--primary); margin-bottom: 25px; letter-spacing: 2px;">
+                <i class="fa-solid fa-list-check"></i> ATUR CARA MAJLIS
+            </h2>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-time">10.30 Pagi</div>
+                    <div class="timeline-desc">Ketibaan para jemputan</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">11.00 Pagi</div>
+                    <div class="timeline-desc">Ketibaan pengantin dan majlis persandingan</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">12.00 Tengah Hari</div>
+                    <div class="timeline-desc">Jamuan makan disajikan</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">2.00 Petang</div>
+                    <div class="timeline-desc">Sesi bergambar bersama keluarga & sahabat handai</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">5.00 Petang</div>
+                    <div class="timeline-desc">Majlis bersurai</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pantun Card -->
+        <div class="card">
+            <div class="card-corner-tr"></div>
+            <div class="card-corner-bl"></div>
+            <div class="pantun-section">
+                <i class="fa-solid fa-quote-left"></i>
+                <p>Bunga melur harum mewangi,<br>
+                Disusun indah di taman sari;<br>
+                Kehadiran tuan kami nantikan,<br>
+                Menambah seri majlis kami.</p>
+            </div>
+        </div>
+
+        <!-- RSVP Form Section Card -->
+        <div class="card" id="rsvp-section">
+            <div class="card-corner-tr"></div>
+            <div class="card-corner-bl"></div>
+            
+            <h2 style="font-family: 'Cinzel', serif; font-size: 1.4rem; color: var(--primary); margin-bottom: 10px; letter-spacing: 2px;">
+                <i class="fa-solid fa-file-signature"></i> PENGESAHAN KEHADIRAN (RSVP)
+            </h2>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 25px;">
+                Sila lengkapkan maklumat di bawah untuk pengesahan kehadiran anda.
+            </p>
+
+            <form class="rsvp-form-container" id="rsvpForm" onsubmit="submitRSVP(event)">
+                <div class="form-group">
+                    <label class="form-label" for="guestName">Nama Penuh</label>
+                    <input type="text" id="guestName" class="form-input" placeholder="Masukkan nama anda" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="attendance">Kehadiran</label>
+                    <select id="attendance" class="form-select" onchange="toggleGuestCount(this.value)">
+                        <option value="hadir">Sedia Hadir</option>
+                        <option value="tidak_hadir">Tidak Dapat Hadir</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="paxGroup">
+                    <label class="form-label" for="paxCount">Jumlah Pax</label>
+                    <select id="paxCount" class="form-select">
+                        <option value="1">1 Orang</option>
+                        <option value="2">2 Orang</option>
+                        <option value="3">3 Orang</option>
+                        <option value="4">4 Orang</option>
+                        <option value="5">5 Orang</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="guestMessage">Ucapan / Doa Restu</label>
+                    <textarea id="guestMessage" class="form-textarea" rows="3" placeholder="Tulis ucapan anda di sini..."></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">Hantar RSVP & Ucapan</button>
+            </form>
+
+            <!-- Hubungi Melalui Telefon (Alternatif) -->
+            <div class="rsvp-contacts">
+                <p style="font-size: 0.8rem; letter-spacing: 1px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 15px; text-align: center;">
+                    Hubungi Pihak Keluarga secara Manual
+                </p>
+                <div class="contact-row">
+                    <div class="contact-info">
+                        <span class="contact-name">Tuan Haji Ahmad</span>
+                        <div class="contact-num">012-345 6789</div>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button class="btn-call" onclick="copyNumber('0123456789')" title="Salin Nombor"><i class="fa-regular fa-copy"></i></button>
+                        <a href="tel:0123456789" class="btn-call" title="Hubungi"><i class="fa-solid fa-phone"></i></a>
+                    </div>
+                </div>
+
+                <div class="contact-row">
+                    <div class="contact-info">
+                        <span class="contact-name">Puan Hajah Siti Zaleha</span>
+                        <div class="contact-num">019-876 5432</div>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button class="btn-call" onclick="copyNumber('0198765432')" title="Salin Nombor"><i class="fa-regular fa-copy"></i></button>
+                        <a href="tel:0198765432" class="btn-call" title="Hubungi"><i class="fa-solid fa-phone"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Guestbook / Wishes Card -->
+        <div class="card">
+            <div class="card-corner-tr"></div>
+            <div class="card-corner-bl"></div>
+            
+            <h2 style="font-family: 'Cinzel', serif; font-size: 1.4rem; color: var(--primary); margin-bottom: 10px; letter-spacing: 2px;">
+                <i class="fa-solid fa-comment-dots"></i> BUKU UCAPAN DIGITAL
+            </h2>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">Ucapan daripada para tetamu yang dikasihi.</p>
+
+            <div class="guestbook-list" id="wishesContainer">
+                <!-- Simulasi Ucapan Pertama -->
+                <div class="guest-wish">
+                    <div class="guest-name">
+                        <span>Dato' Aminuddin & Datin Linda</span>
+                        <span class="guest-time">Baru sahaja</span>
+                    </div>
+                    <div class="guest-text">Selamat pengantin baru Firdaus & Aisyah! Semoga perkahwinan ini dilimpahi rahmat dan berkekalan hingga ke jannah. Amin.</div>
+                </div>
+                <div class="guest-wish">
+                    <div class="guest-name">
+                        <span>Farhan (Sahabat Universiti)</span>
+                        <span class="guest-time">1 jam lalu</span>
+                    </div>
+                    <div class="guest-text">Tahniah sahabatku Firdaus! Akhirnya tamat zaman bujang. Semoga majlis berjalan lancar nanti, insyaAllah saya hadir!</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p class="footer-quote">“Semoga dengan kehadiran dan doa restu para tetamu sekalian, majlis ini mendapat keberkatan serta rahmat daripada Allah Subhanahu Wa Ta’ala.”</p>
+            <p style="font-size: 0.75rem; color: var(--primary); letter-spacing: 2px; text-transform: uppercase;">
+                Yang Menjemput:<br>
+                Tuan Haji Ahmad bin Abdullah & Puan Hajah Siti Zaleha binti Ismail<br>
+                Seisi Keluarga
+            </p>
+            <p style="margin-top: 30px; font-size: 0.65rem; color: #4b5563;">&copy; 2026 Walimatulurus Firdaus & Aisyah. All Rights Reserved.</p>
+        </footer>
+
+    </div>
+
+    <!-- Custom Notification Modal -->
+    <div class="modal-overlay" id="modalOverlay"></div>
+    <div class="modal" id="customModal">
+        <h3 id="modalTitle" style="color: var(--primary); font-size: 1.2rem; margin-bottom: 10px;">Berjaya!</h3>
+        <p id="modalMessage" style="font-size: 0.95rem; color: var(--text-light);"></p>
+        <button class="modal-btn" onclick="closeModal()">OK</button>
+    </div>
+
+    <!-- Script Javascript -->
+    <script>
+        const bgMusic = document.getElementById('bg-music');
+        const audioIcon = document.getElementById('audioIcon');
+        let musicStarted = false;
+
+        // Buka Jemputan Envelope
+        function openEnvelope() {
+            document.getElementById('envelope').classList.add('opened');
+            playMusicOnStart();
+        }
+
+        // Play Music once Envelope is Opened
+        function playMusicOnStart() {
+            if (!musicStarted) {
+                bgMusic.volume = 0.5; // Sederhana kuat
+                bgMusic.play().then(() => {
+                    audioIcon.className = 'fa-solid fa-volume-high';
+                    musicStarted = true;
+                }).catch(error => {
+                    console.log("Autoplay dihalang oleh pelayar. Memerlukan interaksi manual.");
+                });
+            }
+        }
+
+        // Toggle Main/Jeda Audio
+        function toggleAudio() {
+            if (bgMusic.paused) {
+                bgMusic.play();
+                audioIcon.className = 'fa-solid fa-volume-high';
+            } else {
+                bgMusic.pause();
+                audioIcon.className = 'fa-solid fa-volume-xmark';
+            }
+        }
+
+        // Kira Detik (Target: 15 June 2026 11:00 AM)
+        const targetDate = new Date("June 15, 2026 11:00:00").getTime();
+
+        const countdownInterval = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = days < 10 ? "0" + days : days;
+            document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+            document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                document.getElementById("countdown").innerHTML = "<p style='color: var(--primary); font-weight: bold; width:100%; text-align:center;'>Majlis Sedang Berlangsung!</p>";
+            }
+        }, 1000);
+
+        // Hide Pax Count if "Tidak Hadir" is Selected
+        function toggleGuestCount(val) {
+            const paxGroup = document.getElementById('paxGroup');
+            if (val === 'tidak_hadir') {
+                paxGroup.style.display = 'none';
+            } else {
+                paxGroup.style.display = 'block';
+            }
+        }
+
+        // Submit RSVP Form
+        function submitRSVP(event) {
+            event.preventDefault();
+            const name = document.getElementById('guestName').value;
+            const attendance = document.getElementById('attendance').value;
+            const pax = document.getElementById('paxCount').value;
+            const message = document.getElementById('guestMessage').value;
+
+            // Tunjukkan modal maklum balas
+            if (attendance === 'hadir') {
+                showModal("Kehadiran Diterima", `Terima kasih ${name}! Pengesahan untuk ${pax} pax berjaya direkodkan. Kami amat menghargai kedatangan anda.`);
+            } else {
+                showModal("Terima Kasih", `Terima kasih ${name} atas maklum balas anda. Doa restu anda sudah cukup bermakna bagi kami.`);
+            }
+
+            // Tambah ucapan ke Buku Ucapan jika diisi
+            if (message.trim() !== "") {
+                const wishesContainer = document.getElementById('wishesContainer');
+                const newWish = document.createElement('div');
+                newWish.className = 'guest-wish';
+                newWish.innerHTML = `
+                    <div class="guest-name">
+                        <span>${name}</span>
+                        <span class="guest-time">Baru sahaja</span>
+                    </div>
+                    <div class="guest-text">${message}</div>
+                `;
+                wishesContainer.insertBefore(newWish, wishesContainer.firstChild);
+            }
+
+            // Padamkan input borang selepas hantar
+            document.getElementById('rsvpForm').reset();
+            toggleGuestCount('hadir'); // reset view pax
+        }
+
+        // Fungsi Salin Nombor Telefon
+        function copyNumber(number) {
+            const dummy = document.createElement('textarea');
+            document.body.appendChild(dummy);
+            dummy.value = number;
+            dummy.select();
+            document.execCommand('copy');
+            document.body.removeChild(dummy);
+            
+            showModal("Berjaya Disalin", `Nombor telefon ${number} telah disalin ke papan klip.`);
+        }
+
+        // Modal Controls (Custom Elegant Dialogs)
+        function showModal(title, text) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalMessage').innerText = text;
+            document.getElementById('customModal').classList.add('active');
+            document.getElementById('modalOverlay').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('customModal').classList.remove('active');
+            document.getElementById('modalOverlay').classList.remove('active');
+        }
+    </script>
+</body>
+</html>
+
+
